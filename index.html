@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="RashidZainol">
-    <meta name="version" content="1.4.0">
-    <title>OmniAudit GL.io v1.4.0 (Smart Review Fix)</title>
+    <meta name="version" content="1.0.0">
+    <title>OmniAudit GL.io v1.0.0 (Smart Review Fix)</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
@@ -485,7 +485,7 @@
         function applyColumnChanges() { visibleColumns = Array.from(document.querySelectorAll('.col-view-check:checked')).map(c => c.value); document.getElementById('columnModal').style.display = 'none'; renderHeaders(); renderBody(); updateStats(); }
     
 	// --- AUTO UPDATE CHECKER ---
-const CURRENT_VERSION = "1.4.5"; // Tukar ini bila anda release version baru
+const CURRENT_VERSION = "1.0.0"; // Tukar ini bila anda release version baru
 const GITHUB_USER = "rashidzainol"; // Username GitHub anda (Nanti kita create)
 const REPO_NAME = "OmniAudit"; // Nama Repository anda
 const VERSION_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/version.json`;
