@@ -4,34 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="RashidZainol">
-    <meta name="version" content="1.0.1">
-    <title>OmniAudit GL.io v1.0.1 (Smart Review Fix)</title>
+    <meta name="version" content="1.0.0">
+    <title>OmniAudit GL.io v1.0.0</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
     <style>
-        /* --- CORE STYLES --- */
         body { background-color: #f0f4f8; font-family: 'Segoe UI', sans-serif; user-select: none; color: #1e293b; }
         .gradient-header { background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%); }
         .glass-panel { background: white; border: 1px solid #e2e8f0; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         .custom-scrollbar::-webkit-scrollbar { width: 8px; height: 8px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
-        
-        /* HEADERS & FILTERS */
-        thead { position: sticky; top: 0; z-index: 20; background: #f8fafc; }
-        th.sort-header { 
-            background: #f1f5f9; color: #475569; font-size: 0.75rem; text-transform: uppercase; 
-            letter-spacing: 0.05em; padding: 10px 16px; cursor: pointer; border-bottom: 1px solid #e2e8f0;
-            white-space: nowrap; transition: background 0.2s; border-right: 1px solid #e2e8f0;
-        }
+        thead th { position: sticky; top: 0; z-index: 10; background: #f8fafc; border-bottom: 2px solid #e2e8f0; color: #64748b; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; cursor: pointer; border-right: 1px solid #e2e8f0; }
         th.sort-header:hover { background: #e2e8f0; color: #0f172a; }
         .column-filter { width: 100%; padding: 4px 8px; font-size: 0.75rem; border: 1px solid #cbd5e1; border-radius: 4px; background: white; color: #334155; margin-top: 0; font-weight: normal; }
         .column-filter:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1); }
-
-        /* ANIMATIONS */
         .fade-in { animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .spin { animation: spin 1s linear infinite; }
@@ -40,14 +30,12 @@
         @keyframes popIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         .row-selected { background-color: #eff6ff !important; border-left: 4px solid #3b82f6; }
         
-        /* TOAST & OVERLAYS */
         #saveToast { position: fixed; bottom: 20px; right: 20px; background: #1e293b; color: white; padding: 12px 24px; border-radius: 8px; font-size: 0.85rem; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 80; display: flex; align-items: center; gap: 10px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); }
         #saveToast.show { opacity: 1; transform: translateY(-5px); }
         .modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(2px); z-index: 60; display: none; align-items: center; justify-content: center; }
         .modal-content { background: white; padding: 24px; border-radius: 16px; width: 90%; max-width: 600px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
         #loadingOverlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); z-index: 100; display: none; flex-direction: column; align-items: center; justify-content: center; }
 
-        /* BUTTONS */
         .btn-pro { background: linear-gradient(to right, #2563eb, #4f46e5); color: white; transition: 0.2s; }
         .btn-pro:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3); }
         .btn-green { background: linear-gradient(to right, #059669, #10b981); color: white; transition: 0.2s; }
@@ -60,53 +48,46 @@
 
     <div id="loadingOverlay">
         <div class="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full spin mb-4"></div>
-        <h1 class="text-xl font-bold tracking-tight flex items-center gap-2">
-    OmniAudit GL.io 
-    <span class="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold tracking-wide shadow-sm border border-blue-400">v1.0.1</span>
-    <a id="updateBadge" href="https://github.com/rashidzainol/OmniAudit" target="_blank" class="hidden bg-rose-500 hover:bg-rose-600 text-white text-[10px] px-2 py-0.5 rounded-full font-bold tracking-wide shadow-lg cursor-pointer animate-pulse border border-rose-400 flex items-center gap-1 transition">
-        <i data-lucide="arrow-up-circle" class="w-3 h-3"></i> Update!
-    </a>
-</h1>
-        <p class="text-slate-500 font-mono text-xs mt-1">v1.0.1 - Smart Review</p>
+        <h2 class="text-xl font-bold text-slate-800">OmniAudit GL.io</h2>
+        <p class="text-slate-500 font-mono text-xs mt-1">v1.0.0 - Loading...</p>
     </div>
 
     <div id="saveToast"><i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i> <span id="toastMsg">Action Saved</span></div>
 
+    <header class="gradient-header text-white px-6 py-4 shadow-lg flex justify-between items-center z-20 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm border border-white/10"><i data-lucide="shield-check" class="w-6 h-6 text-white"></i></div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight flex items-center gap-2">OmniAudit GL.io <span class="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold tracking-wide shadow-sm border border-blue-400">v1.0.0</span></h1>
+                <p class="text-xs text-blue-100 opacity-80 font-medium tracking-wide">Universal Financial Intelligence</p>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-3">
+            <a id="updateBadge" href="https://github.com/rashidzainol/OmniAudit" target="_blank" class="hidden relative z-50 bg-rose-500 hover:bg-rose-600 text-white text-[10px] px-3 py-1.5 rounded-full font-bold tracking-wide shadow-lg cursor-pointer animate-pulse border border-rose-400 flex items-center gap-2 transition hover:scale-105">
+                <i data-lucide="zap" class="w-3 h-3 text-yellow-300 fill-yellow-300"></i> New Update!
+            </a>
+
+            <span id="fileInfo" class="hidden md:block text-xs font-mono bg-black/20 px-3 py-1 rounded-full text-blue-50 border border-white/10">No File</span>
+            <button onclick="location.reload()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 border border-white/20"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Reset</button>
+        </div>
+    </header>
+
     <div id="reviewModal" class="modal-bg">
         <div class="modal-content pop-in" style="max-width: 900px; height: 85vh; display: flex; flex-direction: column;">
             <div class="flex justify-between items-center mb-4 border-b pb-4">
-                <div>
-                    <h3 class="text-xl font-bold text-slate-800 flex items-center gap-2">
-                        <i data-lucide="list-checks" class="w-6 h-6 text-indigo-600"></i> Review Selection
-                    </h3>
-                    <p class="text-xs text-slate-500">Verify items before extraction.</p>
-                </div>
-                <div class="bg-indigo-50 px-3 py-1 rounded-full text-indigo-700 text-xs font-bold border border-indigo-100">
-                    Selected: <span id="reviewCount">0</span>
-                </div>
+                <div><h3 class="text-xl font-bold text-slate-800 flex items-center gap-2"><i data-lucide="list-checks" class="w-6 h-6 text-indigo-600"></i> Review Selection</h3><p class="text-xs text-slate-500">Verify items before extraction.</p></div>
+                <div class="bg-indigo-50 px-3 py-1 rounded-full text-indigo-700 text-xs font-bold border border-indigo-100">Selected: <span id="reviewCount">0</span></div>
             </div>
-            
-            <div class="flex-1 overflow-y-auto custom-scrollbar border rounded-lg bg-slate-50 mb-4">
-                <table class="w-full text-left border-collapse">
-                    <thead class="sticky top-0 z-10" id="reviewTableHead">
-                        </thead>
-                    <tbody id="reviewTableBody" class="text-sm text-slate-600 divide-y divide-slate-200"></tbody>
-                </table>
-            </div>
-            
-            <div class="flex justify-between items-center pt-2">
-                <button onclick="document.getElementById('reviewModal').style.display='none'" class="px-4 py-2 text-sm text-slate-500 hover:text-slate-800 font-medium">Back to Dashboard</button>
-                <button onclick="proceedToExportConfig()" class="btn-green px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 shadow-lg hover:shadow-xl">
-                    Proceed to Export <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
-            </div>
+            <div class="flex-1 overflow-y-auto custom-scrollbar border rounded-lg bg-slate-50 mb-4"><table class="w-full text-left border-collapse"><thead class="sticky top-0 z-10"><tr><th class="px-4 py-2 w-10 text-center bg-white border-b">Remove</th><th class="px-4 py-2 w-24 bg-white border-b">Date</th><th class="px-4 py-2 w-32 bg-white border-b">Ref</th><th class="px-4 py-2 bg-white border-b">Details</th><th class="px-4 py-2 w-28 text-right bg-white border-b">Amount</th><th class="px-4 py-2 w-32 bg-white border-b">Note</th></tr></thead><tbody id="reviewTableBody" class="text-sm text-slate-600 divide-y divide-slate-200"></tbody></table></div>
+            <div class="flex justify-between items-center pt-2"><button onclick="document.getElementById('reviewModal').style.display='none'" class="px-4 py-2 text-sm text-slate-500 hover:text-slate-800 font-medium">Back to Dashboard</button><button onclick="proceedToExportConfig()" class="btn-green px-6 py-2.5 rounded-lg text-sm font-bold flex items-center gap-2 shadow-lg hover:shadow-xl">Proceed to Export <i data-lucide="arrow-right" class="w-4 h-4"></i></button></div>
         </div>
     </div>
 
     <div id="exportModal" class="modal-bg">
         <div class="modal-content pop-in">
             <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2"><i data-lucide="download" class="w-5 h-5 text-indigo-600"></i> Export Settings</h3>
-            <p class="text-sm text-slate-500 mb-4">Select columns to include.</p>
+            <p class="text-sm text-slate-500 mb-4">Select columns to include in the Excel file.</p>
             <div class="flex justify-between items-center mb-2 px-1 border-b pb-2"><span class="text-xs font-bold text-slate-400 uppercase">Headers</span><div><button onclick="toggleExportCols(true)" class="text-xs text-indigo-600 hover:underline mr-3 font-bold">All</button><button onclick="toggleExportCols(false)" class="text-xs text-slate-500 hover:underline">Clear</button></div></div>
             <div id="exportColumnList" class="max-h-60 overflow-y-auto custom-scrollbar grid grid-cols-2 gap-2 p-1"></div>
             <div class="mt-4 p-3 bg-indigo-50 rounded-lg border border-indigo-100 flex items-start gap-3"><div class="bg-indigo-100 p-1 rounded text-indigo-600"><i data-lucide="info" class="w-4 h-4"></i></div><div><p class="text-xs font-bold text-indigo-800">Auto-Inclusion</p><p class="text-[10px] text-indigo-600">"Audit Note" column is always included.</p></div></div>
@@ -125,29 +106,13 @@
     <div id="columnModal" class="modal-bg">
         <div class="modal-content pop-in">
             <h3 class="text-lg font-bold text-slate-800 mb-2 flex items-center gap-2"><i data-lucide="layout" class="w-5 h-5 text-indigo-600"></i> Manage Columns</h3>
-            <p class="text-xs text-slate-500 mb-4">Tick columns to display.</p>
             <div class="flex justify-between items-center mb-2 px-1"><span class="text-xs font-bold text-slate-400 uppercase">Available Headers</span><button onclick="toggleAllCols(true)" class="text-xs text-indigo-600 hover:underline">Select All</button></div>
             <div id="columnToggleList" class="max-h-60 overflow-y-auto custom-scrollbar grid grid-cols-2 gap-2 p-1"></div>
             <div class="flex justify-end gap-2 mt-6 border-t pt-4"><button onclick="document.getElementById('columnModal').style.display='none'" class="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-lg">Close</button><button onclick="applyColumnChanges()" class="btn-pro px-6 py-2 rounded-lg text-sm font-bold">Apply View</button></div>
         </div>
     </div>
 
-    <header class="gradient-header text-white px-6 py-4 shadow-lg flex justify-between items-center z-20 shrink-0">
-        <div class="flex items-center gap-3">
-            <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm border border-white/10"><i data-lucide="shield-check" class="w-6 h-6 text-white"></i></div>
-            <div>
-                <h1 class="text-xl font-bold tracking-tight flex items-center gap-2">OmniAudit GL.io <span class="bg-blue-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold tracking-wide shadow-sm border border-blue-400">v1.4.0</span></h1>
-                <p class="text-xs text-blue-100 opacity-80 font-medium tracking-wide">Drill-down & Smart Review</p>
-            </div>
-        </div>
-        <div class="flex items-center gap-3">
-            <span id="fileInfo" class="hidden md:block text-xs font-mono bg-black/20 px-3 py-1 rounded-full text-blue-50 border border-white/10">No File</span>
-            <button onclick="location.reload()" class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 border border-white/20"><i data-lucide="refresh-cw" class="w-3 h-3"></i> Reset</button>
-        </div>
-    </header>
-
     <main class="flex-1 overflow-hidden relative bg-slate-50">
-        
         <div id="uploadSection" class="h-full flex flex-col items-center justify-center p-8 fade-in">
             <div class="glass-panel p-16 border-2 border-dashed border-indigo-200 hover:border-indigo-500 hover:bg-indigo-50/30 transition-all cursor-pointer group relative text-center max-w-2xl w-full">
                 <input type="file" id="inputFile" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept=".csv, .xlsx, .xls">
@@ -160,17 +125,12 @@
 
         <div id="configSection" class="hidden h-full flex flex-col items-center justify-center p-6 fade-in">
             <div class="glass-panel w-full max-w-5xl p-10 shadow-xl max-h-[90vh] overflow-y-auto custom-scrollbar">
-                <div class="flex items-center gap-4 mb-8 pb-4 border-b">
-                    <div class="bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">2</div>
-                    <h2 class="text-2xl font-bold text-slate-800">Map Financial Columns</h2>
-                </div>
-                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-8">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex items-center gap-4 mb-8 pb-4 border-b"><div class="bg-indigo-600 text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-lg shadow-lg">2</div><h2 class="text-2xl font-bold text-slate-800">Map Financial Columns</h2></div>
+                <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 mb-8"><div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Debit Column</label><div class="relative"><select id="mapDebit" class="w-full p-3.5 border rounded-xl bg-white text-sm appearance-none font-semibold text-slate-700 shadow-sm"></select><i data-lucide="chevron-down" class="absolute right-3 top-4 w-4 h-4 text-slate-400 pointer-events-none"></i></div></div>
                         <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Credit Column</label><div class="relative"><select id="mapCredit" class="w-full p-3.5 border rounded-xl bg-white text-sm appearance-none font-semibold text-slate-700 shadow-sm"></select><i data-lucide="chevron-down" class="absolute right-3 top-4 w-4 h-4 text-slate-400 pointer-events-none"></i></div></div>
                         <div><label class="block text-xs font-bold text-slate-500 uppercase mb-2">Balance (Opt)</label><div class="relative"><select id="mapBalance" class="w-full p-3.5 border rounded-xl bg-white text-sm appearance-none font-semibold text-slate-700 shadow-sm"></select><i data-lucide="chevron-down" class="absolute right-3 top-4 w-4 h-4 text-slate-400 pointer-events-none"></i></div></div>
-                    </div>
-                </div>
+                </div></div>
                 <div class="mb-6"><div class="flex justify-between items-center mb-3"><label class="block text-xs font-bold uppercase text-slate-500">Select Initial View Columns</label><button onclick="toggleConfigCols(true)" class="text-xs text-indigo-600 hover:underline font-bold">Select All</button></div><div id="configColumnList" class="grid grid-cols-2 md:grid-cols-4 gap-3"></div></div>
                 <div class="flex justify-end border-t pt-6"><button onclick="processConfig()" class="btn-pro px-8 py-3 rounded-xl font-bold text-sm flex items-center gap-2 shadow-lg transform transition hover:scale-105">Launch Dashboard <i data-lucide="layout-dashboard" class="w-4 h-4"></i></button></div>
             </div>
@@ -203,18 +163,38 @@
             </div>
             
             <div class="bg-white border-t border-slate-200 p-2 text-[10px] text-center text-slate-400 font-mono">
-                Powered by RashidZainol &bull; v1.4.0
+                Powered by RashidZainol &bull; v1.0.0
             </div>
         </div>
     </main>
 
     <script>
-        // --- INIT ---
+        // --- AUTO UPDATE CHECKER (GITHUB) ---
+        const CURRENT_VERSION = "1.0.0"; 
+        const GITHUB_USER = "rashidzainol"; 
+        const REPO_NAME = "OmniAudit";
+        const VERSION_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/version.json`;
+
+        async function checkUpdate() {
+            try {
+                const response = await fetch(VERSION_URL);
+                if (!response.ok) return;
+                const data = await response.json();
+                if (data.version !== CURRENT_VERSION) {
+                    const badge = document.getElementById('updateBadge');
+                    badge.classList.remove('hidden');
+                    badge.href = data.download_url;
+                    badge.title = `New version ${data.version} available!`;
+                    console.log(`Update available: v${data.version}`);
+                }
+            } catch (error) { console.log("Update check skipped."); }
+        }
+        setTimeout(checkUpdate, 2000);
+
+        // --- CORE VARIABLES ---
         document.onkeydown = function(e) { if(e.keyCode == 123 || (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0))) return false; }
-        console.log("%c OmniAudit GL.io \n%c v1.4.0 ", "background: #1e3a8a; color: #fff; font-size: 16px; padding: 8px;", "color: #1e3a8a; font-size: 12px;");
         lucide.createIcons();
 
-        // --- VARS ---
         let rawData = [], auditData = [], filteredData = [], headers = [];
         let visibleColumns = [], colDebit = "", colCredit = "", colBalance = "";
         let currentExportType = 'full', currentFileName = "Audit_Data";
@@ -222,7 +202,7 @@
         let sortCol = null, sortAsc = true;
         let columnFilters = {}; 
 
-        // 1. FILE
+        // 1. FILE LOAD
         document.getElementById('inputFile').addEventListener('change', (e) => {
             const file = e.target.files[0];
             if (!file) return;
@@ -252,7 +232,7 @@
             }, 100);
         });
 
-        // 2. CONFIG
+        // 2. MAPPING & CONFIG
         function populateSelect(id, cols, keywords) {
             const sel = document.getElementById(id);
             sel.innerHTML = '<option value="">-- None --</option>';
@@ -272,6 +252,7 @@
             });
         }
         function toggleConfigCols(st) { document.querySelectorAll('.config-col-check').forEach(c => c.checked = st); }
+        
         function processConfig() {
             colDebit = document.getElementById('mapDebit').value;
             colCredit = document.getElementById('mapCredit').value;
@@ -286,12 +267,11 @@
                     if(colCredit) {
                         let cStr = String(row[colCredit]);
                         cr = parseFloat(cStr.replace(/[^0-9.-]/g,'')) || 0;
-                        if(cStr.includes('(')) cr = Math.abs(cr);
+                        if(cStr.includes('(')) cr = Math.abs(cr); 
                     }
                     return { id: i, debit: dr, credit: cr, raw: row, selected: false, note: "" };
                 });
-                renderHeaders(); 
-                filterData();
+                renderHeaders(); filterData();
                 document.getElementById('loadingOverlay').style.display = 'none';
                 document.getElementById('configSection').classList.add('hidden');
                 document.getElementById('dashboardSection').classList.remove('hidden');
@@ -299,13 +279,12 @@
             }, 50);
         }
 
-        // 3. UI
+        // 3. UI LOGIC (FILTER & SORT)
         function updateColumnFilter(col, val) {
             if (val === "") delete columnFilters[col];
             else columnFilters[col] = val.toLowerCase();
             filterData();
         }
-
         function filterData() {
             const globalTxt = document.getElementById('searchInput').value.toLowerCase();
             filteredData = auditData.filter(d => {
@@ -327,16 +306,13 @@
                     return sortAsc ? String(valA).localeCompare(String(valB)) : String(valB).localeCompare(String(valA));
                 });
             }
-            renderBody();
-            updateStats();
+            renderBody(); updateStats();
         }
-
         function sortData(col) {
             if (sortCol === col) sortAsc = !sortAsc;
             else { sortCol = col; sortAsc = true; }
             filterData(); renderHeaders(); 
         }
-
         function renderHeaders() {
             const isAllSelected = filteredData.length > 0 && filteredData.every(d => d.selected);
             const thead = document.getElementById('tableHead');
@@ -356,7 +332,6 @@
             filterRow += `<th class="bg-slate-50 border-l border-slate-200"></th></tr>`;
             thead.innerHTML = topRow + filterRow;
         }
-
         function renderBody() {
             const tbody = document.getElementById('tableBody');
             tbody.innerHTML = "";
@@ -384,7 +359,6 @@
             tbody.innerHTML = bHTML;
             lucide.createIcons();
         }
-
         function updateStats() {
             document.getElementById('statRows').innerText = filteredData.length.toLocaleString();
             let dr=0, cr=0;
@@ -398,57 +372,26 @@
         function toggleRow(id) { const i = auditData.findIndex(x => x.id === id); if(i>-1) { auditData[i].selected = !auditData[i].selected; renderBody(); } }
         function toggleSelectAll(isChecked) { filteredData.forEach(d => { const i = auditData.findIndex(x => x.id === d.id); if(i>-1) auditData[i].selected = isChecked; }); renderBody(); }
 
-        // 5. EXTRACT & EXPORT (DYNAMIC REVIEW FIX)
+        // 5. EXTRACT & EXPORT
         function openReviewModal() {
             const selected = auditData.filter(d => d.selected);
             if(selected.length === 0) return alert("Select rows first.");
-            
             document.getElementById('reviewCount').innerText = selected.length;
-            const thead = document.getElementById('reviewTableHead');
-            
-            // Build Dynamic Review Headers (Action + First 3 Visible Cols + Net + Note)
-            let headerHTML = `<tr><th class="px-4 py-2 w-10 text-center bg-white border-b">Remove</th>`;
-            
-            // Limit to 3 columns to keep modal clean
-            const previewCols = visibleColumns.slice(0, 3);
-            previewCols.forEach(c => {
-                headerHTML += `<th class="px-4 py-2 w-32 bg-white border-b text-xs text-slate-500 uppercase">${c}</th>`;
-            });
-            headerHTML += `<th class="px-4 py-2 w-28 text-right bg-white border-b">Net Amt</th>`;
-            headerHTML += `<th class="px-4 py-2 w-32 bg-white border-b">Note</th></tr>`;
-            thead.innerHTML = headerHTML;
-
-            // Build Body
             const tbody = document.getElementById('reviewTableBody');
             tbody.innerHTML = "";
-            
             selected.forEach(d => {
-                let rowHTML = `<tr class="bg-white border-b border-slate-100 hover:bg-slate-50">
-                    <td class="px-4 py-2 text-center">
-                        <button onclick="removeItem(${d.id})" class="text-rose-500 hover:bg-rose-50 p-1 rounded transition"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
-                    </td>`;
-                
-                previewCols.forEach(c => {
-                    let val = d.raw[c];
-                    if(val instanceof Date) val = val.toLocaleDateString();
-                    rowHTML += `<td class="px-4 py-2 text-xs text-slate-700 truncate max-w-[150px]" title="${val}">${val||'-'}</td>`;
-                });
-
+                const dateKey = Object.keys(d.raw).find(k=>k.match(/date|tarikh/i)) || visibleColumns[0];
+                const refKey = Object.keys(d.raw).find(k=>k.match(/ref|no/i)) || visibleColumns[1];
                 const amt = d.debit - d.credit;
-                rowHTML += `<td class="px-4 py-2 font-mono text-right text-xs font-bold text-slate-700">${amt.toLocaleString('en-MY', {minimumFractionDigits:2})}</td>`;
-                rowHTML += `<td class="px-4 py-2 text-xs italic text-slate-400 truncate max-w-[100px]">${d.note||''}</td></tr>`;
-                
-                tbody.innerHTML += rowHTML;
+                tbody.innerHTML += `<tr class="bg-white border-b border-slate-100"><td class="px-4 py-2 text-center"><button onclick="removeItem(${d.id})" class="text-rose-500 hover:bg-rose-50 p-1 rounded"><i data-lucide="trash-2" class="w-4 h-4"></i></button></td><td class="px-4 py-2 text-xs">${d.raw[dateKey] instanceof Date ? d.raw[dateKey].toLocaleDateString() : d.raw[dateKey]||'-'}</td><td class="px-4 py-2 font-mono text-xs text-indigo-600">${d.raw[refKey]||'-'}</td><td class="px-4 py-2 text-xs text-slate-500 italic">Details...</td><td class="px-4 py-2 font-mono text-right text-xs font-bold">${amt.toLocaleString('en-MY', {minimumFractionDigits:2})}</td><td class="px-4 py-2 text-xs italic text-slate-400">${d.note||''}</td></tr>`;
             });
-
             document.getElementById('reviewModal').style.display = 'flex';
             lucide.createIcons();
         }
-
         function removeItem(id) { const i = auditData.findIndex(x => x.id === id); if(i>-1) { auditData[i].selected = false; openReviewModal(); renderBody(); } }
+        
         function triggerFullReport() { currentExportType = 'full'; openExportConfig(); }
         function proceedToExportConfig() { document.getElementById('reviewModal').style.display = 'none'; currentExportType = 'extract'; openExportConfig(); }
-        
         function openExportConfig() {
             const div = document.getElementById('exportColumnList');
             div.innerHTML = "";
@@ -483,34 +426,6 @@
         function openColumnModal() { document.querySelectorAll('.col-view-check').forEach(c => c.checked = visibleColumns.includes(c.value)); document.getElementById('columnModal').style.display = 'flex'; }
         function toggleAllCols(st) { document.querySelectorAll('.col-view-check').forEach(c => c.checked = st); }
         function applyColumnChanges() { visibleColumns = Array.from(document.querySelectorAll('.col-view-check:checked')).map(c => c.value); document.getElementById('columnModal').style.display = 'none'; renderHeaders(); renderBody(); updateStats(); }
-    
-	// --- AUTO UPDATE CHECKER ---
-const CURRENT_VERSION = "1.0.1"; // Tukar ini bila anda release version baru
-const GITHUB_USER = "rashidzainol"; // Username GitHub anda (Nanti kita create)
-const REPO_NAME = "OmniAudit"; // Nama Repository anda
-const VERSION_URL = `https://raw.githubusercontent.com/${GITHUB_USER}/${REPO_NAME}/main/version.json`;
-
-async function checkUpdate() {
-    try {
-        const response = await fetch(VERSION_URL);
-        if (!response.ok) return; // Fail senyap kalau offline
-        const data = await response.json();
-        
-        // Bandingkan version (Simple string comparison)
-        if (data.version !== CURRENT_VERSION) {
-            const badge = document.getElementById('updateBadge');
-            badge.classList.remove('hidden');
-            badge.href = data.download_url; // Link ke file baru
-            badge.title = `New version ${data.version} available!`;
-            console.log(`Update available: v${data.version}`);
-        }
-    } catch (error) {
-        console.log("Offline mode: Update check skipped.");
-    }
-}
-
-// Jalankan checker 2 saat selepas page load
-setTimeout(checkUpdate, 2000);
-	</script>
+    </script>
 </body>
 </html>
